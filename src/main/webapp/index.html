@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Gestión de libros, autores y categorías de la biblioteca">
+    <title>Biblioteca | Gestión del catálogo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-content">
+        <a class="brand" href="./" aria-label="Biblioteca, inicio">
+            <span class="brand-mark" aria-hidden="true">B</span>
+            <span>Biblioteca</span>
+        </a>
+        <nav aria-label="Navegación principal">
+            <a href="#libros">Libros</a>
+            <a href="#autores">Autores</a>
+            <a href="#categorias">Categorías</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">CATÁLOGO</p>
+        <h1 id="page-title">Gestión de la biblioteca</h1>
+        <p>Administra los libros y organiza el catálogo por autores y categorías.</p>
+    </section>
+
+    <section class="management-section" id="libros" aria-labelledby="books-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">COLECCIÓN</p>
+                <h2 id="books-title">Libros</h2>
+            </div>
+            <p class="section-description">Crea, modifica o elimina títulos del catálogo.</p>
+        </div>
+        <div class="content-grid">
+            <form class="card form-card" id="book-form">
+                <div class="card-heading">
+                    <h3 id="book-form-title">Añadir libro</h3>
+                    <p>Completa la información del libro.</p>
+                </div>
+                <input id="book-id" type="hidden">
+                <label for="book-title">Título</label>
+                <input id="book-title" name="titulo" type="text" maxlength="200" required>
+                <label for="book-isbn">ISBN</label>
+                <input id="book-isbn" name="isbn" type="text" maxlength="17" required>
+                <label for="book-year">Año de publicación</label>
+                <input id="book-year" name="anioPublicacion" type="number" min="1" required>
+                <label for="book-author">Autor</label>
+                <select id="book-author" name="idAutor" required>
+                    <option value="">Selecciona un autor</option>
+                </select>
+                <label for="book-categories">Categorías</label>
+                <select id="book-categories" name="idCategorias" multiple size="4" aria-describedby="categories-hint">
+                </select>
+                <small id="categories-hint" class="field-hint">Puedes seleccionar varias categorías.</small>
+                <div class="form-actions">
+                    <button class="button button-primary" id="book-submit" type="submit">Guardar libro</button>
+                    <button class="button button-secondary" id="book-cancel" type="button" hidden>Cancelar</button>
+                </div>
+                <p class="status-message" id="books-status" role="status" aria-live="polite">Cargando...</p>
+            </form>
+
+            <div class="card table-card">
+                <div class="card-heading">
+                    <h3>Catálogo</h3>
+                    <p>Libros registrados en la biblioteca.</p>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <caption class="visually-hidden">Listado de libros</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">Libro</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Categorías</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody id="books-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="management-section" id="autores" aria-labelledby="authors-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">PERSONAS</p>
+                <h2 id="authors-title">Autores</h2>
+            </div>
+            <p class="section-description">Mantén actualizada la información de los autores.</p>
+        </div>
+        <div class="content-grid">
+            <form class="card form-card compact-form" id="author-form">
+                <div class="card-heading">
+                    <h3 id="author-form-title">Añadir autor</h3>
+                    <p>Registra un autor para el catálogo.</p>
+                </div>
+                <input id="author-id" type="hidden">
+                <label for="author-name">Nombre</label>
+                <input id="author-name" name="nombre" type="text" maxlength="100" required>
+                <label for="author-surname">Apellido</label>
+                <input id="author-surname" name="apellido" type="text" maxlength="100" required>
+                <div class="form-actions">
+                    <button class="button button-primary" id="author-submit" type="submit">Guardar autor</button>
+                    <button class="button button-secondary" id="author-cancel" type="button" hidden>Cancelar</button>
+                </div>
+                <p class="status-message" id="authors-status" role="status" aria-live="polite">Cargando...</p>
+            </form>
+
+            <div class="card table-card">
+                <div class="card-heading">
+                    <h3>Autores registrados</h3>
+                    <p>Gestiona los autores disponibles.</p>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <caption class="visually-hidden">Listado de autores</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody id="authors-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="management-section" id="categorias" aria-labelledby="categories-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">ORGANIZACIÓN</p>
+                <h2 id="categories-title">Categorías</h2>
+            </div>
+            <p class="section-description">Organiza los libros con categorías fáciles de encontrar.</p>
+        </div>
+        <div class="content-grid">
+            <form class="card form-card compact-form" id="category-form">
+                <div class="card-heading">
+                    <h3 id="category-form-title">Añadir categoría</h3>
+                    <p>Crea o actualiza una categoría.</p>
+                </div>
+                <input id="category-id" type="hidden">
+                <label for="category-name">Nombre</label>
+                <input id="category-name" name="nombre" type="text" maxlength="100" required>
+                <div class="form-actions">
+                    <button class="button button-primary" id="category-submit" type="submit">Guardar categoría</button>
+                    <button class="button button-secondary" id="category-cancel" type="button" hidden>Cancelar</button>
+                </div>
+                <p class="status-message" id="categories-status" role="status" aria-live="polite">Cargando...</p>
+            </form>
+
+            <div class="card table-card">
+                <div class="card-heading">
+                    <h3>Categorías disponibles</h3>
+                    <p>Gestiona las categorías del catálogo.</p>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <caption class="visually-hidden">Listado de categorías</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody id="categories-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container">Biblioteca · Gestión del catálogo</div>
+</footer>
+</body>
+</html>
